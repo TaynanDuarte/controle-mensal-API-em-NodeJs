@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 function tokenGenerator() {
-    const token = jwt.sign({}, process.env.SECRET, {expiresIn: 300});
+    // verificar se o usuário existe no banco e retornar um tken valido
+    const token = jwt.sign({}, process.env.SECRET, { expiresIn: 300 });
 }
