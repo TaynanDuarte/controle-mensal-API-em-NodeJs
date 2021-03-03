@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const UserSchema = require('../../../src/database/schemas/user.schema');
-const UserFactory = require('../../../src/factories/user.factory');
+const UserRepository = require('../../../src/repositories/user.repository');
 const userUtils = require('../../utils/user.test.utils');
 
 
-describe('userFactory', () => {
+describe('userRepository', () => {
 
     beforeAll(async () => {
         if (!process.env.MONGO_URL) throw new Error('mongodb was not initalized');
@@ -30,8 +30,8 @@ describe('userFactory', () => {
             const fakeUserCreated =
                 await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
 
-            const userFactory = new UserFactory();
-            const user = await userFactory.getUser(fakeUserCreated.email, fakeUserCreated.password_hash);
+            const userRepository = new UserRepository();
+            const user = await userRepository.getUser(fakeUserCreated.email, fakeUserCreated.password_hash);
 
             expect(fakeUserCreated._id).toEqual(user._id);
             expect(fakeUserCreated.name).toEqual(user.name);
@@ -48,9 +48,9 @@ describe('userFactory', () => {
             const fakeUserCreated =
                 await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
 
-            const userFactory = new UserFactory();
+            const userRepository = new UserRepository();
             const newUserInfo = { ...fakeUserCreated._doc, name: 'UserTest' };
-            const updateResponse = await userFactory.updateUser(newUserInfo);
+            const updateResponse = await userRepository.updateUser(newUserInfo);
             expect(updateResponse.nModified).toBe(1);
 
         });

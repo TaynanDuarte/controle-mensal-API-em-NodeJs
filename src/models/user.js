@@ -1,13 +1,13 @@
 
 
-class User{
+class User {
 
     #_id;
     #name;
     #email;
     #role;
 
-    constructor(_id, name, email, role){
+    constructor(_id, name, email, role) {
         this.#_id = _id;
         this.#name = name;
         this.#email = email;
@@ -28,6 +28,11 @@ class User{
 
     get role() {
         return this.#role;
+    }
+
+
+    static isAValidObject(user) {
+        return user.name && user.email && user.role;
     }
 
 }
