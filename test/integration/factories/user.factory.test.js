@@ -28,19 +28,32 @@ describe('userFactory', () => {
         it('should recive email and user password, then returns an user if it was finded', async () => {
 
             const fakeUserCreated =
-                await userUtils.createUserOnMockDataBase('user@test', 'passTest', 'admin');
+                await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
 
-            const userFactory = new UserFactory()
+            const userFactory = new UserFactory();
             const user = await userFactory.getUser(fakeUserCreated.email, fakeUserCreated.password_hash);
 
             expect(fakeUserCreated._id).toEqual(user._id);
             expect(fakeUserCreated.name).toEqual(user.name);
             expect(fakeUserCreated.email).toEqual(user.email);
+            expect(fakeUserCreated.role).toEqual(user.role);
             expect(fakeUserCreated.password_hash).toEqual(user.password_hash);
-
 
         });
     });
 
+
+    describe('updateUser', () => {
+        it('should recive a user and update it on database', async () => {
+            const fakeUserCreated =
+                await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
+
+            const userFactory = new UserFactory();
+            const newUserInfo = { ...fakeUserCreated._doc, name: 'UserTest' };
+            const updateResponse = await userFactory.updateUser(newUserInfo);
+            expect(updateResponse.nModified).toBe(1);
+
+        });
+    });
 
 });
