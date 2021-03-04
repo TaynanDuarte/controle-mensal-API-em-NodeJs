@@ -6,7 +6,11 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended:false }));
 
 
-app.get('/', (req, res) => {
+const userController = require('./controller/user.controller')();
+
+
+app.post('/login', (req, res) => {
+
     return res.send('aaaa');
 })
 

@@ -10,6 +10,11 @@ function userController() {
         return await userService.getUser(email, password);
     }
 
+
+    return {
+        getUser
+    }
+
 }
 
 
