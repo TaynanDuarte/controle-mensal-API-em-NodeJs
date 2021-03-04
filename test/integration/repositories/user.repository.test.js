@@ -25,7 +25,7 @@ describe('userRepository', () => {
 
 
     describe('getUser', () => {
-        it('should recive email and user password, then returns an user if it was finded', async () => {
+        it('should receive email and user password, then returns an user if it was finded', async () => {
 
             const fakeUserCreated =
                 await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
@@ -44,7 +44,7 @@ describe('userRepository', () => {
 
 
     describe('updateUser', () => {
-        it('should recive a user and update it on database', async () => {
+        it('should receive a user and update it on database', async () => {
             const fakeUserCreated =
                 await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
 
