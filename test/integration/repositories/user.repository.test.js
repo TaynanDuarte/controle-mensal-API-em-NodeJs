@@ -40,6 +40,19 @@ describe('userRepository', () => {
             expect(fakeUserCreated.password_hash).toEqual(user.password_hash);
 
         });
+
+        it('should return empty json em user is not finded', async () => {
+
+            const fakeUserCreated =
+                await userUtils.createUserOnMockDataBase('ZéTest', 'user@test', 'passTest', 'admin');
+
+            const userRepository = new UserRepository();
+            const user = await userRepository.getUser('userTest', '123');
+            
+            await expect(user).toBe(null);
+
+        });
+
     });
 
 

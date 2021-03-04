@@ -14,7 +14,8 @@ class UserService {
             throw new Error('email and password should be a string');
         }
 
-        return await this.#repository.getUser(email, password);
+        const user = await this.#repository.getUser(email, password); 
+        return user;
     }
 
     async updateUser(user) {
