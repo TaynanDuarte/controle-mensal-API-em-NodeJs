@@ -10,11 +10,11 @@ class UserService {
 
     async getUser(email, password) {
 
-        if (typeof email !== 'String' || typeof password !== 'String') {
+        if (typeof email !== 'string' || typeof password !== 'string') {
             throw new Error('email and password should be a string');
         }
 
-        return this.#repository.getUser(email, password);
+        return await this.#repository.getUser(email, password);
     }
 
     async updateUser(user) {
@@ -22,7 +22,7 @@ class UserService {
         const isValid = User.isAValidObject(user);
         if (!isValid) throw new Error('invalid user to update');
 
-        await this.#repository.updateUser(user);
+        return await this.#repository.updateUser(user);
     }
 
 }
