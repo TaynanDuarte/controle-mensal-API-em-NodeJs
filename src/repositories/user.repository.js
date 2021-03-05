@@ -12,6 +12,11 @@ class UserRepository {
             { name: user.name, email: user.email, password_hash: user.password, role: user.role });
     }
 
+    async createUser(user) {
+       const newUser = await UserSchema.create(user);
+       return newUser.save(); 
+    }
+
 }
 
 module.exports = UserRepository;

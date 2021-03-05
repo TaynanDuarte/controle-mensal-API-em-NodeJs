@@ -3,6 +3,8 @@ const UserSchema = require('../../../src/database/schemas/user.schema');
 const UserRepository = require('../../../src/repositories/user.repository');
 const userUtils = require('../../utils/user.test.utils');
 
+const User = require('../../../src/models/user');
+
 
 describe('userRepository', () => {
 
@@ -48,7 +50,7 @@ describe('userRepository', () => {
 
             const userRepository = new UserRepository();
             const user = await userRepository.getUser('userTest', '123');
-            
+
             await expect(user).toBe(null);
 
         });
@@ -67,6 +69,26 @@ describe('userRepository', () => {
             expect(updateResponse.nModified).toBe(1);
 
         });
+    });
+
+
+    describe('createUser', () => {
+
+        it('should recive a user and insert it on database', async () => {
+
+            const user = new User('1', 'zeTest', 'user@test', '1234', 'admin').getJsonFormat();
+
+            const userRepository = new UserRepository();
+            const newUser = await userRepository.createUser(user);
+
+            expect(newUser.name).toBe('zeTest');
+            expect(newUser.email).toBe('user@test');
+            expect(newUser.password_hash).toBe('1234');
+            expect(newUser.role).toBe('admin');
+
+
+        });
+
     });
 
 });

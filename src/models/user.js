@@ -5,14 +5,14 @@ class User {
     #_id;
     #name;
     #email;
-    #password;
+    #password_hash;
     #role;
 
-    constructor(_id, name, email, password, role) {
+    constructor(_id, name, email, password_hash, role) {
         this.#_id = _id;
         this.#name = name;
         this.#email = email;
-        this.#password = password;
+        this.#password_hash = password_hash;
         this.#role = role;
     }
 
@@ -28,8 +28,8 @@ class User {
         return this.#email;
     }
 
-    get password() {
-        return this.#password;
+    get password_hash() {
+        return this.#password_hash;
     }
 
     get role() {
@@ -40,13 +40,13 @@ class User {
 
         const name = this.#name;
         const email = this.#email;
-        const password = this.#password;
+        const password_hash = this.#password_hash;
         const role = this.#role;
 
         return {
             name,
             email,
-            password,
+            password_hash,
             role
         }
     }
