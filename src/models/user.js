@@ -5,12 +5,14 @@ class User {
     #_id;
     #name;
     #email;
+    #password;
     #role;
 
-    constructor(_id, name, email, role) {
+    constructor(_id, name, email, password, role) {
         this.#_id = _id;
         this.#name = name;
         this.#email = email;
+        this.#password = password;
         this.#role = role;
     }
 
@@ -26,8 +28,27 @@ class User {
         return this.#email;
     }
 
+    get password() {
+        return this.#password;
+    }
+
     get role() {
         return this.#role;
+    }
+
+    getJsonFormat() {
+
+        const name = this.#name;
+        const email = this.#email;
+        const password = this.#password;
+        const role = this.#role;
+
+        return {
+            name,
+            email,
+            password,
+            role
+        }
     }
 
 
