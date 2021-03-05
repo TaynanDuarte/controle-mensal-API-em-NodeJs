@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const databaseConnection = require('../../../src/database/connection');
 const UserSchema = require('../../../src/database/schemas/user.schema');
 const UserRepository = require('../../../src/repositories/user.repository');
 const userUtils = require('../../utils/user.test.utils');
@@ -9,16 +10,11 @@ const User = require('../../../src/models/user');
 describe('userRepository', () => {
 
     beforeAll(async () => {
-        if (!process.env.MONGO_URL) throw new Error('mongodb was not initalized');
-        await mongoose.connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        });
+        await databaseConnection.initConnection();
     });
 
     afterAll(async () => {
-        await mongoose.disconnect();
+        await databaseConnection.closeConnection();
     });
 
     beforeEach(async () => {
@@ -85,7 +81,6 @@ describe('userRepository', () => {
             expect(newUser.email).toBe('user@test');
             expect(newUser.password_hash).toBe('1234');
             expect(newUser.role).toBe('admin');
-
 
         });
 

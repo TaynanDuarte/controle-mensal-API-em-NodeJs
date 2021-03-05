@@ -3,21 +3,17 @@ const UserRepository = require('../../../src/repositories/user.repository');
 const UserSchema = require('../../../src/database/schemas/user.schema');
 
 const mongoose = require('mongoose');
+const databaseConnection = require('../../../src/database/connection');
 
 
 describe('UserService', () => {
 
     beforeAll(async () => {
-        if (!process.env.MONGO_URL) throw new Error('mongodb was not initalized');
-        await mongoose.connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        });
+        databaseConnection.initConnection();
     });
 
     afterAll(async () => {
-        await mongoose.disconnect();
+        databaseConnection.closeConnection();
     });
 
     beforeEach(async () => {
