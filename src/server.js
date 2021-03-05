@@ -8,6 +8,9 @@ app.use(bodyparser.urlencoded({ extended:false }));
 
 const userController = require('./controller/user.controller')();
 
+app.get('/', (req, res) => {
+    return res.send('*')
+})
 
 app.post('/login', (req, res) => {
 
