@@ -53,7 +53,7 @@ class User {
 
 
     static isAValidObject(user) {
-        return user.name && user.email && user.role;
+        return user.name && user.email && user.password_hash && user.role;
     }
 
 }

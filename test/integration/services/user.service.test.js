@@ -58,4 +58,24 @@ describe('UserService', () => {
 
     });
 
+
+    describe('createUser', () => {
+
+        it('should throw an error when user is invalid', async () => {
+
+            const userRepository = new UserRepository();
+            const userService = new UserService(userRepository);
+
+            const invalidUser = {
+                name: 'zé',
+                surname: 'user'
+            }
+
+            await expect(userService.createUser(invalidUser))
+                .rejects.toThrow('invalid user to create method');
+
+        });
+
+    })
+
 });
