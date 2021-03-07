@@ -6,16 +6,14 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const corsConfig = require('./cors.config');
 
+const userController = require('./controller/user.controller')();
+
+
 const app = express();
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(corsConfig);
-
 app.disable('x-powered-by');
-
-const dataBaseConnection = require('./database/connection');
-const userController = require('./controller/user.controller')();
-
 
 
 app.get('/', (req, res) => {
@@ -28,26 +26,9 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-
-    const newUser = {
-        name: req.body.name,
-        email: req.body.email,
-        password_hash: req.body.password,
-        role: 'common_user'
-    };
-
-    try {
-
-        dataBaseConnection.initConnection();
-        const userCreated = await userController.createUser(newUser);
-        dataBaseConnection.closeConnection();
-
-        return res.status(201).send('user registered');
-    } catch (error) {
-        console.log('api error: ', error);
-        dataBaseConnection.closeConnection();
-        return res.status(400).send('user not registered');
-    }
+    const createdUser = await userController.createUser(req);
+    if (Object.keys(createdUser).length === 0) return res.status(400).send('register failed');
+    else return res.status(201).send('user created');
 });
 
 
