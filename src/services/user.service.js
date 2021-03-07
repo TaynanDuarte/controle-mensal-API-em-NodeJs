@@ -47,8 +47,10 @@ class UserService {
             role
         });
 
+        const emptyAttr = name === '' || email === '' || password_hash === '' || role === '';
         const isValid = User.isAValidObject(user);
-        if (!isValid) throw new Error('invalid user to create method');
+
+        if (!isValid || emptyAttr) throw new Error('invalid user to create method');
 
         return await this.#repository.createUser(newUser);
     }
