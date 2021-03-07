@@ -1,5 +1,6 @@
 const userFactory = require('../factories/user.factory')();
 const dataBaseConnection = require('../database/connection');
+const argonHash = require('argon2');
 
 
 function userController() {
@@ -15,7 +16,7 @@ function userController() {
         const newUser = {
             name: req.body.name,
             email: req.body.email,
-            password_hash: req.body.password,
+            password_hash: await argonHash.hash(req.body.password, { type: argonHash.argon2id }),
             role: 'common_user'
         };
 
