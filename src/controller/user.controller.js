@@ -20,17 +20,9 @@ function userController() {
             role: 'common_user'
         };
 
-        let createdUser = {};
-        try {
-
-            await dataBaseConnection.initConnection();
-            createdUser = await userService.createUser(newUser);
-            await dataBaseConnection.closeConnection();
-
-        } catch (error) {
-            console.log('>> error: ', error);
-            await dataBaseConnection.closeConnection();
-        }
+        await dataBaseConnection.initConnection();
+        const createdUser = await userService.createUser(newUser);
+        await dataBaseConnection.closeConnection();
 
         return createdUser;
     }
