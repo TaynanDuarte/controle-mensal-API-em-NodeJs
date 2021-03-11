@@ -28,7 +28,7 @@ describe('POST /register', () => {
     });
 
 
-    it('should return status 400 when recieve a invalid user object', async () => {
+    it('should return status 400 when request do not contains name, email or password', async () => {
 
         const res = await supertest(app)
             .post('/register')

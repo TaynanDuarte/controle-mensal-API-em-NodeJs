@@ -12,13 +12,14 @@ app.use(bodyparser.urlencoded({ extended: false }));
 app.use(corsConfig);
 app.disable('x-powered-by');
 
-const userController = require('./controller/user.controller')();
+const registerController = require('./controller/register.controller');
 const loginController = require('./controller/login.controller');
 
 
 app.get('/', (req, res) => {
     return res.send('*')
 });
+
 
 app.post('/login', async (req, res) => {
 
@@ -32,20 +33,21 @@ app.post('/login', async (req, res) => {
         else return res.status(201).send(authResponse);
 
     } catch (error) {
-        res.status(401).send(error);
+        res.status(401).send('authentication failed');
     }
 });
 
 
-
 app.post('/register', async (req, res) => {
 
+    const { name, email, password } = req.body;
+
     try {
-        const createdUser = await userController.createUser(req);
+        const createdUser = await registerController.createUser(name, email, password);
         if (Object.keys(createdUser).length === 0) return res.status(400).send('register failed');
         else return res.status(201).send('user created');
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send('register failed');
     }
 
 });
