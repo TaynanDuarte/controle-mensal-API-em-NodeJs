@@ -1,6 +1,6 @@
 const userFactory = require('../factories/user.factory')();
 const dataBaseConnection = require('../database/connection');
-const argonHash = require('argon2');
+const hash = require('../utils/hashTools');
 
 
 async function createUser(name, email, password) {
@@ -10,7 +10,7 @@ async function createUser(name, email, password) {
     const newUser = {
         name: name,
         email: email,
-        password_hash: await argonHash.hash(password, { type: argonHash.argon2id }),
+        password_hash: await hash.getArgonHash(password),
         role: 'common_user'
     };
 

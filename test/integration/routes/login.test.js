@@ -22,19 +22,19 @@ describe('POST /login', () => {
 
 
     it('should recieve a json with email and password and authenticate the user with JWT', async () => {
-        const userCreated =
-            await testUtils.createUserOnMockDataBase('userTest', 'user@logintest', '123', 'admin');
+        const createdUser =
+            await testUtils.createUserOnMockDataBase('userTest', 'user@logintest', '321', 'admin');
 
         const res = await supertest(app)
             .post('/login')
             .send({
                 email: 'user@logintest',
-                password: '123'
+                password: '321'
             });
 
 
         expect(res.body).toEqual({
-            token: authTools.generateTokenWithEmail(userCreated.email),
+            token: authTools.generateTokenWithEmail(createdUser.email),
             data: {
                 email: 'user@logintest'
             }
@@ -46,13 +46,13 @@ describe('POST /login', () => {
         async () => {
 
             const userCreated =
-                await testUtils.createUserOnMockDataBase('userTest', 'user@logintest', '123', 'admin');
+                await testUtils.createUserOnMockDataBase('userTest', 'user@logintest', '321', 'admin');
 
             const res = await supertest(app)
                 .post('/login')
                 .send({
                     email: 'user@test',
-                    password: '123'
+                    password: '321'
                 });
 
             expect(res.status).toBe(401);
@@ -60,18 +60,18 @@ describe('POST /login', () => {
 
         });
 
-    
-        it('should return status 400 when request do not contains email or password', async () => {
 
-            const res = await supertest(app)
-                .post('/login')
-                .send({
-                    name: 'userTeste',
-                });
+    it('should return status 400 when request do not contains email or password', async () => {
 
-            expect(res.status).toBe(400);
-            expect(res.text).toBe('invalid request');
+        const res = await supertest(app)
+            .post('/login')
+            .send({
+                name: 'userTeste',
+            });
 
-        });
+        expect(res.status).toBe(400);
+        expect(res.text).toBe('invalid request');
+
+    });
 
 });
